@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Cliente</title>
+        <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+        <link th:href="@{/https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css}" rel="stylesheet" />
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    </head>
+    <body class="py-3 bg-dark">
+       <div class="alert alert-success alert-dismissable" th:if="${success != null}">
+			<label th:text="${success}"></label>
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    	<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/producto/}">Producto</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/cliente/}">Cliente</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+       
+    <br>
+    <br>
+    <br>
+        <div class="container" id="advanced-search-form">
+            <form action="#" th:action="@{/presupuesto/}" th:object="${presupuesto}" method="post">
+                <div class="form-group">
+                    <label for="first-name" class="text-white mb-2">Numero</label>
+                    <input type="text" class="form-control" placeholder="Numero del presupuesto" id="first-name" th:field="*{numeroPresupuesto}">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('numeroPresupuesto')}"
+                        th:errors="*{numeroPresupuesto}" >
+                    </small> 
+                    
+                    <br>
+                    
+                    <label for="first-name" class="text-white mb-2">Cantidad</label>
+                    <input type="number" class="form-control" th:field="*{cantidad}">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('cantidad')}"
+                        th:errors="*{cantidad}" >
+                    </small>
+                    
+                    <br>
+                    
+                    <label for="first-name" class="text-white mb-2">Valor</label>
+                    <input type="number" step="any" class="form-control" placeholder="Valor del producto" id="first-name" th:field="*{valorProducto}">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('valorProducto')}"
+                        th:errors="*{valorProducto}" >
+                    </small>
+                    
+                    <br>
+                    
+                     <label for="first-name" class="text-white mb-2">Valor USD</label>
+                    <input type="number" step="any" class="form-control" placeholder="Valor de usd" id="first-name" th:field="*{valorUsd}">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('valorUsd')}"
+                        th:errors="*{valorUsd}" >
+                    </small>
+                    
+                    <br>
+                    
+                    <label for="first-name" class="text-white mb-2">Ancho</label>
+                    <input type="number" class="form-control" placeholder="Ancho" id="first-name" th:field="*{ancho}">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('ancho')}"
+                        th:errors="*{ancho}" >
+                    </small>
+                    
+                    <br>
+                    
+                    <label for="first-name" class="text-white mb-2">Largo</label>
+                    <input type="number" class="form-control" placeholder="Largo" id="first-name" th:field="*{largo}">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('largo')}"
+                        th:errors="*{largo}" >
+                    </small>
+                    
+                     <br>
+                    
+                    <p class="text-white mb-2"> Producto:</p>
+					<select th:field="*{producto}" id="producto">
+						<option th:each="producto:${productos}"
+						th:value="${producto.idProducto}"
+						th:text="${producto.nombre}"/>
+					</select>
+	
+                </div>
+                <div class="clearfix"></div>
+                 <br>
+                <button type="submit" class="btn btn-info btn-lg btn-responsive" id="search"> <span class="glyphicon glyphicon-search"></span>Crear presupuesto</button>
+            </form>
+        </div>
+
+
+       
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+        <footer class="py-5 bg-dark">
+            <div class="container px-5"><p class="m-12 text-center text-white">Copyright &copy; Ruiz&Wolf</p></div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
