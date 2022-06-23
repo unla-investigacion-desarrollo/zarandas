@@ -20,10 +20,6 @@ public class Presupuesto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idPresupuesto;
 	
-	@Column(name = "numeroPresupuesto")
-	@NotEmpty(message="Campo requerido.")
-	private String numeroPresupuesto;
-	
 	@Column(name = "cantidad")
 	@NotNull(message="Campo requerido.")
 	private int cantidad;
@@ -53,13 +49,12 @@ public class Presupuesto {
 	    	
 	    }
 	 
-	public Presupuesto(@NotEmpty(message = "Campo requerido.") String numeroPresupuesto,
+	public Presupuesto(
 			@NotEmpty(message = "Campo requerido.") int cantidad,
 			@NotEmpty(message = "Campo requerido.") Double valorProducto,
 			@NotEmpty(message = "Campo requerido.") Double ancho, @NotEmpty(message = "Campo requerido.") Double largo,
 			@NotEmpty(message = "Campo requerido.") Double valorUsd, Producto producto) {
 		super();
-		this.numeroPresupuesto = numeroPresupuesto;
 		this.cantidad = cantidad;
 		this.valorProducto = valorProducto;
 		this.ancho = ancho;
@@ -75,15 +70,7 @@ public class Presupuesto {
 	protected void setIdPresupuesto(long idPresupuesto) {
 		this.idPresupuesto = idPresupuesto;
 	}
-
-	public String getNumeroPresupuesto() {
-		return numeroPresupuesto;
-	}
-
-	public void setNumeroPresupuesto(String numeroPresupuesto) {
-		this.numeroPresupuesto = numeroPresupuesto;
-	}
-
+	
 	public int getCantidad() {
 		return cantidad;
 	}
