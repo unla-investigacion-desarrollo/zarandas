@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zarandas.proyecto.entities.Producto;
 import com.zarandas.proyecto.repositories.IProductoRepository;
@@ -15,28 +17,32 @@ public class ProductoService implements IProductoService{
 	
 	@Autowired
 	@Qualifier("productoRepository")
-	private IProductoRepository permisoRepository;
+	private IProductoRepository productoRepository;
 
 	@Override
 	public List<Producto> getAll() {
-		return permisoRepository.findAll();
+		return productoRepository.findAll();
 	}
 
 	@Override
 	public Producto buscar(long id) {
-		return permisoRepository.findById(id).orElse(null);
+		return productoRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public void eliminar(long id) {
-		// TODO Auto-generated method stub
-		
+		productoRepository.deleteById(id);
 	}
 
 	@Override
 	public void save(Producto producto) {
-		permisoRepository.save(producto);
-		
+		productoRepository.save(producto);
+	}
+	
+	@Transactional
+	@Modifying
+	public void update(String nombre, long idProducto) {
+		productoRepository.updateProducto(idProducto, nombre);
 	}
 
 }

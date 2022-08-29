@@ -198,8 +198,8 @@
                 <div class="container-fluid">
 
                     <div class="container" id="advanced-search-form">
-                        <form action="#" th:action="@{/producto/guardar}" th:object="${producto}" method="post">
-                        	<input type="hidden" th:field="${producto.idProducto}" />
+                        <form action="#" th:action="@{/producto/guardarUpdate}" th:object="${producto}" method="post">
+                        	<input type="hidden" th:field="*{idProducto}" />
                             <div class="form-group">
                                 <label for="first-name" class="text-black mb-2">Nombre</label>
                                 <input type="text" class="form-control" placeholder="Nombre del producto" id="first-name" th:field="*{nombre}">
@@ -209,7 +209,7 @@
                             </div>
                             <div class="clearfix"></div>
                              <br>
-                            <button type="submit" class="btn btn-info btn-lg btn-responsive" id="search"> <span class="glyphicon glyphicon-search"></span>Crear producto</button>
+                            <button type="submit" class="btn btn-info btn-lg btn-responsive" id="search"> <span class="glyphicon glyphicon-search"></span>Actualizar producto</button>
                         </form>
                     </div>
 
