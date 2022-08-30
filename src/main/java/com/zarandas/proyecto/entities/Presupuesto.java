@@ -1,5 +1,6 @@
 package com.zarandas.proyecto.entities;
 
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,9 +46,16 @@ public class Presupuesto {
 	@NotNull(message="Campo requerido.")
 	private Producto producto;
 	
-	 public Presupuesto() {
-	    	
-	    }
+	@Column(name = "isHabilitado")
+	private boolean isHabilitado;
+	
+	@Column(name = "valorTotal")
+	private Double valorTotal;
+	
+	@Column(name = "fechaCreacion")
+	private LocalDate fechaCreacion;
+	
+	public Presupuesto() {}
 	 
 	public Presupuesto(
 			@NotEmpty(message = "Campo requerido.") int cantidad,
@@ -118,5 +126,28 @@ public class Presupuesto {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
+	
+	public boolean isHabilitado() {
+		return isHabilitado;
+	}
 
+	public void setHabilitado(boolean isHabilitado) {
+		this.isHabilitado = isHabilitado;
+	}
+	
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+	public LocalDate getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(LocalDate fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
 }

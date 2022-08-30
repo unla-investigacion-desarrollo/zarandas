@@ -2,6 +2,8 @@ package com.zarandas.proyecto.controllers;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,6 +45,7 @@ public class ProductoController {
 			System.out.println("Hubo error en el formulario!");
 			return "producto/crear";
 		}
+		producto.setHabilitado(true);
 		productoService.save(producto);
 		System.out.println("Producto guardado con exito!");
 		return "redirect:/producto/lista";
@@ -67,6 +70,7 @@ public class ProductoController {
 	@GetMapping("/lista")
 	public String listarProductos(Model model) {
 		List<Producto> productos = productoService.getAll();
+		productos = productos.stream().filter(producto -> Boolean.TRUE.equals(producto.isHabilitado())).collect(Collectors.toList());
 		model.addAttribute("titulo", "Productos");
 		model.addAttribute("lista", productos);
 		return "producto/lista";
@@ -82,7 +86,9 @@ public class ProductoController {
 	
 	@GetMapping("/delete/{idProducto}")
 	public String delete (@PathVariable("idProducto") long idProducto,Model model,RedirectAttributes attribute) {
-		productoService.eliminar(idProducto);
+		Producto producto = productoService.buscar(idProducto);
+		producto.setHabilitado(false);
+		productoService.save(producto);
 		return "redirect:/producto/lista";
 	}
 	

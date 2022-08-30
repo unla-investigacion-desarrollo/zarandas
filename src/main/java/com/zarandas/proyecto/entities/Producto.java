@@ -19,6 +19,9 @@ public class Producto {
 	@NotEmpty(message="El nombre no debe estar vacio")
 	private String nombre;
 	
+	@Column(name = "isHabilitado")
+	private boolean isHabilitado;
+	
     public Producto() {
     	
     }
@@ -43,4 +46,14 @@ public class Producto {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	public boolean isHabilitado() {
+		return isHabilitado;
+	}
+
+	public void setHabilitado(boolean isHabilitado) {
+		this.isHabilitado = isHabilitado;
+	}
+	
+	
 }

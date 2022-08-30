@@ -3,7 +3,10 @@ package com.zarandas.proyecto.services.implementation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.zarandas.proyecto.entities.Cliente;
 import com.zarandas.proyecto.repositories.IClienteRepository;
 import com.zarandas.proyecto.services.IClienteService;
@@ -35,7 +38,12 @@ public class ClienteService implements IClienteService{
 	@Override
 	public void save(Cliente cliente) {
 		clienteRepository.save(cliente);
-		
+	}
+	
+	@Transactional
+	@Modifying
+	public void update(String nombre, String email, long idCliente) {
+		clienteRepository.updateCliente(idCliente, nombre, email);
 	}
 
 }

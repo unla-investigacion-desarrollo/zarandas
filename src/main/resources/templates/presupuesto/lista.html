@@ -239,7 +239,14 @@
 						<table class="table">
 							<thead class="thead-dark">
 								<tr>
-									<th scope="col">Nombre</th>
+									<th scope="col">Cantidad</th>
+									<th scope="col">Valor producto</th>
+									<th scope="col">Ancho</th>
+									<th scope="col">Largo</th>
+									<th scope="col">Valor USD</th>
+									<th scope="col">Producto</th>
+									<th scope="col">Valor total</th>
+									<th scope="col">Fecha</th>
 									<th scope="col"></th>
 									<th scope="col"></th>
 								</tr>
@@ -247,20 +254,27 @@
 							<tbody>
 								<tr th:each="li:${lista}">
 
-									<th scope="row" th:text="${li.nombre}"></th>
+									<th scope="row" th:text="${li.cantidad}"></th>
+									<th scope="row" th:text="${li.valorProducto}"></th>
+									<th scope="row" th:text="${li.ancho}"></th>
+									<th scope="row" th:text="${li.largo}"></th>
+									<th scope="row" th:text="${li.valorUsd}"></th>
+									<th scope="row" th:text="${li.producto.nombre}"></th>
+									<th scope="row" th:text="${li.valorTotal}"></th>
+									<th scope="row" th:text="${li.fechaCreacion}"></th>
 
 									<td>
 										<a class="btn btn-success btn-sm"
-										th:href="@{/producto/edit/{id}(id=${li.idProducto})}" th:text="Editar"
+										th:href="@{/presupuesto/edit/{id}(id=${li.idPresupuesto})}" th:text="Editar"
 										title="permisos periodo"> 
 										</a>
 									</td>
 
 									<td>
 										<a class="btn btn-danger btn-sm"
-										th:href="@{/producto/delete/{id}(id=${li.idProducto})}"
+										th:href="@{/presupuesto/delete/{id}(id=${li.idPresupuesto})}"
 										th:text="Eliminar" title="Eliminar perfil"
-										onclick="return confirm('Esta seguro de eliminar el producto?');">
+										onclick="return confirm('Esta seguro de eliminar el presupuesto?');">
 										</a>
 									</td>
 

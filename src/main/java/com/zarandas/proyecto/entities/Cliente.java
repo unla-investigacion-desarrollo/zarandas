@@ -24,9 +24,10 @@ public class Cliente {
 	@NotEmpty(message="El email no debe estar vacio")
 	private String email;
 	
-	 public Cliente() {
-	    	
-	    }
+	@Column(name = "isHabilitado")
+	private boolean isHabilitado;
+	
+	public Cliente() {	}
 
 	public Cliente(String nombre,String email) {
 		super();
@@ -58,4 +59,11 @@ public class Cliente {
 		this.email = email;
 	}
 
+	public boolean isHabilitado() {
+		return isHabilitado;
+	}
+
+	public void setHabilitado(boolean isHabilitado) {
+		this.isHabilitado = isHabilitado;
+	}
 }

@@ -1,7 +1,8 @@
 package com.zarandas.proyecto.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,8 +39,11 @@ public class PresupuestoController {
 	public String crear(Model model) {
 		Presupuesto presupuesto = new Presupuesto();
 		List<Producto> listaProductos = productoService.getAll();
+		listaProductos = listaProductos.stream().filter(producto -> Boolean.TRUE.equals(producto.isHabilitado())).collect(Collectors.toList());
+		
 		model.addAttribute("presupuesto", presupuesto);
 		model.addAttribute("productos", listaProductos);
+		
 		return "presupuesto/crear";
 	}
 	
@@ -55,32 +59,56 @@ public class PresupuestoController {
 			System.out.println("Hubo error en el formulario!");
 			return "presupuesto/crear";
 		}
+		
+		presupuesto.setFechaCreacion(LocalDate.now());
+		presupuesto.setHabilitado(true);
+		presupuesto.setValorTotal(presupuestoService.calculateTotal(presupuesto));
+		
 		presupuestoService.save(presupuesto);
-		System.out.println("Presupuesto creado con exito!");
-		System.out.println(presupuestoService.calculateTotal(presupuesto));
-		attribute.addFlashAttribute("success","Presupuesto creado con exito");
-		return "redirect:/presupuesto/";
+		return "redirect:/presupuesto/lista";
+	}
+	
+	@PostMapping("/guardarUpdate")
+	public String guardarUpdate(@Valid @ModelAttribute Presupuesto presupuesto, BindingResult result, Model model, RedirectAttributes attribute) {
+		if(result.hasErrors()) {
+			model.addAttribute("titulo", "Editar presupuesto");
+			System.out.println("Hubo error en el formulario!");
+			return "presupuesto/crear";
+		}
+		if(idUpdate!=0) {
+			presupuestoService.update(idUpdate, presupuesto.getCantidad(), presupuesto.getValorProducto(), presupuesto.getAncho(), presupuesto.getLargo(), presupuesto.getValorUsd());
+			idUpdate=0;
+			return "redirect:/presupuesto/lista";
+		}
+		return "redirect:/presupuesto/lista";
 	}
 	
 	@GetMapping("/lista")
-	public String listarRodados(Model model) {
+	public String listarPresupuestos(Model model) {
 		List<Presupuesto> presupuestos = presupuestoService.getAll();
-		model.addAttribute("titulo", "Productos");
+		presupuestos = presupuestos.stream().filter(presupuesto -> Boolean.TRUE.equals(presupuesto.isHabilitado())).collect(Collectors.toList());
+		
+		model.addAttribute("titulo", "Presupuestos");
 		model.addAttribute("lista", presupuestos);
 		return "presupuesto/lista";
 	}
 	
 	@GetMapping("/edit/{idPresupuesto}")
-	public String edit(@PathVariable("idProducto") long idPresupuesto,Model model) {
+	public String edit(@PathVariable("idPresupuesto") long idPresupuesto,Model model) {
 		Presupuesto presupuesto = presupuestoService.buscar(idPresupuesto);
+		List<Producto> listaProductos = productoService.getAll();
+		listaProductos = listaProductos.stream().filter(producto -> Boolean.TRUE.equals(producto.isHabilitado())).collect(Collectors.toList());
 		idUpdate=idPresupuesto;
 		model.addAttribute("presupuesto", presupuesto);
+		model.addAttribute("productos", listaProductos);
 		return "presupuesto/update";
 	}
 	
 	@GetMapping("/delete/{idPresupuesto}")
 	public String delete (@PathVariable("idPresupuesto") long idPresupuesto,Model model,RedirectAttributes attribute) {
-		presupuestoService.eliminar(idPresupuesto);
+		Presupuesto presupuesto = presupuestoService.buscar(idPresupuesto);
+		presupuesto.setHabilitado(false);
+		presupuestoService.save(presupuesto);
 		return "redirect:/presupuesto/lista";
 	}
 

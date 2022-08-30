@@ -3,7 +3,10 @@ package com.zarandas.proyecto.services.implementation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.zarandas.proyecto.entities.Presupuesto;
 import com.zarandas.proyecto.repositories.IPresupuestoRepository;
 import com.zarandas.proyecto.services.IPresupuestoService;
@@ -25,11 +28,6 @@ public class PresupuestoService implements IPresupuestoService{
 		return presupuestoRepository.findById(id).orElse(null);
 	}
 
-	@Override
-	public void eliminar(long id) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void save(Presupuesto presupuesto) {
@@ -46,5 +44,16 @@ public class PresupuestoService implements IPresupuestoService{
 		return Math.ceil(resultado);
 	}
 	
+	@Override
+	public void eliminar(long id) {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Transactional
+	@Modifying
+	public void update(long idPresupuesto, int cantidad, double valorProducto, double ancho, double largo,
+			double valorUsd) {
+		presupuestoRepository.updatePresupuesto(idPresupuesto, cantidad, valorProducto, ancho, largo, valorUsd);
+	}
 }
