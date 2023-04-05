@@ -16,5 +16,4 @@ public interface IClienteRepository extends JpaRepository<Cliente, Long>{
 	@Modifying
 	@Query("UPDATE Cliente c SET c.nombre=(:nombre), c.email=(:email) WHERE c.idCliente = (:idCliente)")
 	public abstract void updateCliente(@Param("idCliente") long idCliente, @Param("nombre") String nombre, @Param("email") String email);
-
 }
